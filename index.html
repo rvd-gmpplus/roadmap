@@ -3,411 +3,328 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Data Quality Project - Updated Roadmap</title>
+<title>Data Quality Project - Roadmap Overview</title>
 <style>
-  :root { --gmp-purple:#6859A7;--gmp-purple-light:#E8E5F0;--gmp-purple-mid:#9B8FCB;--gmp-green:#38B769;--gmp-green-light:#E5F5EC;--gmp-orange:#EA8004;--gmp-orange-light:#FFF3E0;--gmp-red:#D32F2F;--gmp-red-light:#FFEBEE;--gmp-text:#333;--gmp-text-light:#666;--gmp-bg:#FFF;--gmp-gray:#F5F5F5;--gmp-border:#E0E0E0;--gmp-future:#D9D9D9; }
+  :root { --purple:#6859A7;--purple-light:#E8E5F0;--purple-mid:#9B8FCB;--green:#38B769;--green-light:#E5F5EC;--orange:#EA8004;--orange-light:#FFF3E0;--red:#D32F2F;--red-light:#FFEBEE;--text:#333;--light:#666;--gray:#D9D9D9;--border:#E0E0E0;--future:#D9D9D9; }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Segoe UI',Arial,sans-serif;font-size:11pt;color:var(--gmp-text);background:var(--gmp-gray);line-height:1.4}
-  .container{max-width:1400px;margin:0 auto;padding:20px}
-  .header{background:linear-gradient(135deg,var(--gmp-purple) 0%,#4A3D8F 100%);color:#fff;padding:28px 32px;border-radius:12px;margin-bottom:24px;position:relative;overflow:hidden}
-  .header::after{content:'';position:absolute;top:-30px;right:-30px;width:200px;height:200px;background:rgba(255,255,255,.05);border-radius:50%}
-  .header h1{font-size:22pt;font-weight:600;margin-bottom:6px}
-  .header .subtitle{font-size:11pt;opacity:.85}
-  .header .meta{display:flex;gap:24px;margin-top:12px;font-size:9.5pt;opacity:.75;flex-wrap:wrap}
-  .header .meta span{display:flex;align-items:center;gap:4px}
-  .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px}
-  .stat-card{background:#fff;border-radius:8px;padding:14px 16px;text-align:center;border-top:3px solid var(--gmp-purple)}
-  .stat-card.green{border-top-color:var(--gmp-green)}.stat-card.orange{border-top-color:var(--gmp-orange)}.stat-card.red{border-top-color:var(--gmp-red)}
-  .stat-number{font-size:22pt;font-weight:700;line-height:1}
-  .stat-card.green .stat-number{color:var(--gmp-green)}.stat-card.orange .stat-number{color:var(--gmp-orange)}.stat-card.red .stat-number{color:var(--gmp-red)}.stat-card .stat-number{color:var(--gmp-purple)}
-  .stat-label{font-size:9pt;color:var(--gmp-text-light);margin-top:4px}
-  .overview-bar{background:#fff;border-radius:10px;padding:20px 24px;margin-bottom:24px;border:1px solid var(--gmp-border)}
-  .overview-bar h3{font-size:11pt;font-weight:600;color:var(--gmp-purple);margin-bottom:14px}
-  .overview-track{display:flex;align-items:stretch;gap:0;border-radius:8px;overflow:hidden;height:54px;position:relative}
-  .overview-phase{display:flex;flex-direction:column;justify-content:center;align-items:center;padding:4px 8px;color:#fff;font-size:8.5pt;font-weight:600;position:relative;min-width:0}
-  .overview-phase .phase-sub{font-size:7.5pt;font-weight:400;opacity:.85;margin-top:1px}
-  .overview-now{position:absolute;top:-8px;bottom:-8px;width:3px;background:var(--gmp-red);z-index:10}
-  .overview-now::after{content:'📍 NOW';position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:8pt;font-weight:700;color:var(--gmp-red);white-space:nowrap}
-  .overview-months{display:flex;margin-top:6px;font-size:7.5pt;color:var(--gmp-text-light)}
-  .overview-months span{text-align:center}
-  .section-header{display:flex;align-items:center;gap:10px;margin:28px 0 16px 0;padding-bottom:8px;border-bottom:2px solid var(--gmp-purple)}
-  .section-header h2{font-size:16pt;font-weight:600;color:var(--gmp-purple)}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:#fff;color:var(--text);padding:48px 56px}
+
+  h1{font-size:28pt;font-weight:700;color:var(--purple);margin-bottom:4px}
+  .subtitle{font-size:12pt;color:var(--light);margin-bottom:32px}
+
+  /* Phase timeline bar */
+  .timeline{display:flex;gap:0;border-radius:10px;overflow:hidden;height:72px;margin-bottom:8px;position:relative}
+  .phase-block{display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff;font-weight:600;font-size:10pt;position:relative;padding:4px 6px}
+  .phase-block .label{font-size:10.5pt;font-weight:700}
+  .phase-block .sub{font-size:8pt;font-weight:400;opacity:.85;margin-top:2px}
+  .now-marker{position:absolute;top:-10px;bottom:-10px;width:3px;background:var(--red);z-index:10}
+  .now-marker::after{content:'NOW';position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:7.5pt;font-weight:800;color:var(--red);letter-spacing:1px}
+
+  .month-labels{display:flex;margin-bottom:28px;font-size:7.5pt;color:var(--light);padding:0 2px}
+  .month-labels span{text-align:center}
+
+  /* Key milestones */
+  .milestones{display:flex;gap:16px;margin-bottom:32px}
+  .ms{flex:1;background:#f9f8fc;border-radius:10px;padding:16px 18px;border-left:4px solid var(--orange);position:relative}
+  .ms .ms-icon{font-size:22pt;margin-bottom:6px}
+  .ms .ms-title{font-size:10.5pt;font-weight:700;color:var(--purple);margin-bottom:4px}
+  .ms .ms-when{font-size:9pt;font-weight:600;color:var(--orange);margin-bottom:6px}
+  .ms .ms-desc{font-size:9pt;color:var(--light);line-height:1.4}
+
+  /* Phase detail cards */
+  .phases{display:grid;grid-template-columns:repeat(4, 1fr);gap:14px;margin-bottom:28px}
+  .pc{border-radius:10px;padding:16px 18px;position:relative}
+  .pc .pc-status{font-size:7.5pt;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+  .pc h3{font-size:11pt;font-weight:700;color:var(--purple);margin-bottom:4px}
+  .pc .pc-period{font-size:9pt;color:var(--light);margin-bottom:8px}
+  .pc .pc-items{font-size:9pt;color:var(--text);line-height:1.5}
+  .pc .pc-items span{display:block}
+
+  .pc.done{background:#f0f9f3;border-top:3px solid var(--green)}
+  .pc.done .pc-status{color:var(--green)}
+  .pc.wip{background:#fff7ed;border-top:3px solid var(--orange)}
+  .pc.wip .pc-status{color:var(--orange)}
+  .pc.future{background:#f4f3f8;border-top:3px solid var(--gray)}
+  .pc.future .pc-status{color:#999}
+
+  /* Dependencies strip */
+  .deps{background:#fff8e1;border-radius:10px;padding:14px 20px;display:flex;gap:24px;align-items:center;font-size:9.5pt;margin-bottom:20px}
+  .deps .dep-icon{font-size:18pt;flex-shrink:0}
+  .deps .dep-item{flex:1}
+  .deps .dep-item strong{color:var(--purple)}
+
+  /* Forward Plan section */
+  .section-header{display:flex;align-items:center;gap:10px;margin:28px 0 16px 0;padding-bottom:8px;border-bottom:2px solid var(--purple)}
+  .section-header h2{font-size:16pt;font-weight:600;color:var(--purple)}
   .section-header .badge{font-size:9pt;padding:3px 10px;border-radius:12px;font-weight:600;color:#fff}
-  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:18px;padding:10px 16px;background:#fff;border-radius:8px;border:1px solid var(--gmp-border);font-size:9.5pt}
-  .legend-item{display:flex;align-items:center;gap:6px}
-  .legend-dot{width:14px;height:14px;border-radius:3px;flex-shrink:0}
-  .timeline-grid{display:grid;gap:12px;margin-bottom:20px}
-  .phase-card{background:#fff;border-radius:10px;border-left:5px solid var(--gmp-purple);padding:16px 20px;position:relative;transition:box-shadow .2s}
-  .phase-card:hover{box-shadow:0 4px 16px rgba(104,89,167,.12)}
-  .phase-card.completed{border-left-color:var(--gmp-green)}.phase-card.in-progress{border-left-color:var(--gmp-orange)}.phase-card.not-started{border-left-color:var(--gmp-red)}.phase-card.future{border-left-color:var(--gmp-purple)}
-  .phase-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px}
-  .phase-title{font-size:12pt;font-weight:600;color:var(--gmp-purple);display:flex;align-items:center;gap:8px}
-  .phase-period{font-size:9pt;color:var(--gmp-text-light);background:var(--gmp-gray);padding:3px 10px;border-radius:12px;font-weight:500;white-space:nowrap}
-  .phase-period.original{text-decoration:line-through;opacity:.5;margin-right:4px}
-  .status-badge{display:inline-flex;align-items:center;gap:4px;font-size:8.5pt;font-weight:600;padding:2px 8px;border-radius:10px;margin-bottom:6px}
-  .status-badge.done{background:var(--gmp-green-light);color:#2E7D32}.status-badge.wip{background:var(--gmp-orange-light);color:#E65100}.status-badge.blocked{background:var(--gmp-red-light);color:var(--gmp-red)}.status-badge.planned{background:var(--gmp-purple-light);color:var(--gmp-purple)}
-  .phase-content{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  @media(max-width:900px){.phase-content{grid-template-columns:1fr}}
-  .deliverables,.actuals{font-size:9.5pt}
-  .deliverables h4,.actuals h4{font-size:9.5pt;font-weight:600;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
-  .deliverables h4{color:var(--gmp-text-light)}.actuals h4{color:var(--gmp-green)}
-  .deliverables ul,.actuals ul{list-style:none;padding:0}
-  .deliverables li,.actuals li{padding:2px 0;padding-left:18px;position:relative;line-height:1.35}
-  .deliverables li::before{content:'○';position:absolute;left:0;color:var(--gmp-text-light);font-size:9pt}
-  .actuals li::before{position:absolute;left:0;font-size:9pt}
-  .actuals li.done::before{content:'✅'}.actuals li.partial::before{content:'🟡'}.actuals li.pending::before{content:'⚠️'}.actuals li.blocked::before{content:'❌'}
-  .owner-tag{display:inline-block;font-size:8pt;background:var(--gmp-purple-light);color:var(--gmp-purple);padding:1px 6px;border-radius:8px;font-weight:500;margin-left:3px}
-  .milestone-row{background:#fff;border-radius:10px;padding:12px 20px;display:flex;align-items:center;gap:12px;border:2px dashed var(--gmp-orange)}
-  .milestone-icon{font-size:20pt;flex-shrink:0}
-  .milestone-content{flex:1}.milestone-content strong{font-size:11pt;color:var(--gmp-purple)}.milestone-content p{font-size:9.5pt;color:var(--gmp-text-light);margin-top:2px}
-  .milestone-date{font-size:9pt;font-weight:600;color:var(--gmp-orange);white-space:nowrap}
-  .dependency-callout{background:#FFF8E1;border:1px solid #FFE082;border-radius:8px;padding:12px 16px;margin:12px 0;font-size:9.5pt;display:flex;align-items:flex-start;gap:10px}
-  .dependency-callout .icon{font-size:16pt;flex-shrink:0}
-  .timeline-visual{background:#fff;border-radius:10px;padding:20px;margin-bottom:16px;overflow-x:auto}
+
+  .timeline-visual{background:#f9f8fc;border-radius:10px;padding:20px;margin-bottom:16px;overflow-x:auto}
   .gantt-row{display:flex;align-items:center;margin-bottom:6px;min-height:32px}
-  .gantt-label{width:210px;flex-shrink:0;font-size:9pt;font-weight:600;color:var(--gmp-text);padding-right:10px;text-align:right}
+  .gantt-label{width:210px;flex-shrink:0;font-size:9pt;font-weight:600;color:var(--text);padding-right:10px;text-align:right}
   .gantt-track{flex:1;position:relative;height:26px;display:flex}
   .gantt-bar{height:100%;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8pt;color:#fff;font-weight:600;position:absolute;min-width:20px;padding:0 4px;white-space:nowrap;overflow:hidden}
   .gantt-bar:hover{opacity:.85}
-  .gantt-months{display:flex;align-items:center;border-bottom:1px solid var(--gmp-border);margin-bottom:10px;padding-bottom:6px}
-  .gantt-months .gantt-label{font-weight:400;color:var(--gmp-text-light)}
+  .gantt-months{display:flex;align-items:center;border-bottom:1px solid var(--border);margin-bottom:10px;padding-bottom:6px}
+  .gantt-months .gantt-label{font-weight:400;color:var(--light)}
   .gantt-months .gantt-track{display:flex;height:auto}
-  .gantt-month{flex:1;text-align:center;font-size:8.5pt;font-weight:600;color:var(--gmp-purple);padding:2px 0}
-  .gantt-month.current{background:var(--gmp-purple);color:#fff;border-radius:4px}
-  .gantt-milestone{position:absolute;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:14px solid var(--gmp-orange);top:50%;transform:translateY(-50%) translateX(-8px);z-index:2}
-  .gantt-divider{border-bottom:1px dashed var(--gmp-border);margin:4px 0;display:flex;align-items:center}
-  .gantt-divider .gantt-label{font-size:8pt;color:var(--gmp-text-light);font-weight:400;font-style:italic}
-  .qw-card{background:#fff;border-radius:10px;border-left:5px solid var(--gmp-green);padding:16px 20px;margin-bottom:12px}
-  .qw-card h4{font-size:11pt;font-weight:600;color:var(--gmp-green);margin-bottom:8px}
-  .qw-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:9.5pt}
-  @media(max-width:900px){.qw-grid{grid-template-columns:1fr}}
-  .qw-item{background:var(--gmp-green-light);border-radius:6px;padding:8px 12px}
-  .qw-item strong{color:var(--gmp-text);font-size:9.5pt}
-  .qw-item .qw-meta{font-size:8pt;color:var(--gmp-text-light);margin-top:3px}
-  .footer{text-align:center;padding:16px;font-size:8.5pt;color:var(--gmp-text-light);margin-top:20px}
-  @media print{body{background:#fff;font-size:9pt}.container{padding:10px}.phase-card:hover{box-shadow:none}}
+  .gantt-month{flex:1;text-align:center;font-size:8.5pt;font-weight:600;color:var(--purple);padding:2px 0}
+  .gantt-month.current{background:var(--purple);color:#fff;border-radius:4px}
+  .gantt-milestone{position:absolute;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:14px solid var(--orange);top:50%;transform:translateY(-50%) translateX(-8px);z-index:2}
+  .gantt-divider{border-bottom:1px dashed var(--border);margin:4px 0;display:flex;align-items:center}
+  .gantt-divider .gantt-label{font-size:8pt;color:var(--light);font-weight:400;font-style:italic}
+
+  .timeline-grid{display:grid;gap:12px;margin-bottom:20px}
+  .milestone-row{background:#f9f8fc;border-radius:10px;padding:12px 20px;display:flex;align-items:center;gap:12px;border:2px dashed var(--orange)}
+  .milestone-icon{font-size:20pt;flex-shrink:0}
+  .milestone-content{flex:1}
+  .milestone-content strong{font-size:11pt;color:var(--purple)}
+  .milestone-content p{font-size:9.5pt;color:var(--light);margin-top:2px}
+  .milestone-date{font-size:9pt;font-weight:600;color:var(--orange);white-space:nowrap}
+
+  .phase-card{background:#fff;border-radius:10px;border-left:5px solid var(--purple);padding:16px 20px;position:relative}
+  .phase-card.future{border-left-color:var(--purple)}
+  .phase-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px}
+  .phase-title{font-size:12pt;font-weight:600;color:var(--purple);display:flex;align-items:center;gap:8px}
+  .phase-period{font-size:9pt;color:var(--light);background:#f4f3f8;padding:3px 10px;border-radius:12px;font-weight:500;white-space:nowrap}
+  .status-badge{display:inline-flex;align-items:center;gap:4px;font-size:8.5pt;font-weight:600;padding:2px 8px;border-radius:10px;margin-bottom:6px}
+  .status-badge.planned{background:var(--purple-light);color:var(--purple)}
+  .phase-content{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:900px){.phase-content{grid-template-columns:1fr}}
+  .deliverables{font-size:9.5pt}
+  .deliverables h4{font-size:9.5pt;font-weight:600;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;color:var(--light)}
+  .deliverables ul{list-style:none;padding:0}
+  .deliverables li{padding:2px 0;padding-left:18px;position:relative;line-height:1.35}
+  .deliverables li::before{content:'○';position:absolute;left:0;color:var(--light);font-size:9pt}
+  .owner-tag{display:inline-block;font-size:8pt;background:var(--purple-light);color:var(--purple);padding:1px 6px;border-radius:8px;font-weight:500;margin-left:3px}
+
+  /* Footer */
+  .foot{font-size:8pt;color:#aaa;text-align:center;margin-top:12px}
+
+  @media print{body{padding:24px 32px}h1{font-size:22pt}}
 </style>
 </head>
 <body>
-<div class="container">
 
-  <div class="header">
-    <h1>📊 Data Quality Project - Updated Roadmap</h1>
-    <div class="subtitle">GMP+ International | Data Quality Project Phase 1</div>
-    <div class="meta">
-      <span>📅 Reference date: 2 April 2026</span>
-      <span>👤 Project Manager: Mirella van der Kleij</span>
-      <span>🏢 Sponsor: Martin van den Bedum</span>
-      <span>💰 Budget: €325K (incl. €30K tolerance) - source: approved project proposal Oct 2025</span>
-    </div>
+<h1>📊 Data Quality Project - Roadmap</h1>
+<div class="subtitle">GMP+ International | Phase 1 | Reference date: 2 April 2026</div>
+
+<!-- TIMELINE BAR -->
+<div class="timeline">
+  <div class="phase-block" style="flex:1;background:var(--green)">
+    <span class="label">Preparation</span>
+    <span class="sub">Nov '25</span>
   </div>
-
-  <div class="stats-row">
-    <div class="stat-card green"><div class="stat-number">1/5</div><div class="stat-label">Phases completed</div></div>
-    <div class="stat-card orange"><div class="stat-number">1/5</div><div class="stat-label">Phases in progress (delayed)</div></div>
-    <div class="stat-card red"><div class="stat-number">3/5</div><div class="stat-label">Phases not started (2 were planned to have started)</div></div>
-    <div class="stat-card"><div class="stat-number">~8 wks</div><div class="stat-label">Delay versus original plan</div></div>
+  <div class="phase-block" style="flex:4;background:var(--orange)">
+    <span class="label">Deep Dive</span>
+    <span class="sub">Jan - Apr '26</span>
+    <div class="now-marker" style="left:80%"></div>
   </div>
-
-  <!-- HIGH-LEVEL OVERVIEW -->
-  <div class="overview-bar">
-    <h3>High-level timeline: where are we now?</h3>
-    <div class="overview-track">
-      <div class="overview-phase" style="flex: 1; background: var(--gmp-green);"><span>Preparation</span><span class="phase-sub">Nov '25</span></div>
-      <div class="overview-phase" style="flex: 5; background: var(--gmp-orange);">
-        <span>Deep Dive</span><span class="phase-sub">Jan '26 - Apr '26</span>
-        <div class="overview-now" style="left: 82%;"></div>
-      </div>
-      <div class="overview-phase" style="flex: 2; background: var(--gmp-future); color: #666;"><span>Core Clean</span><span class="phase-sub">Apr - May '26</span></div>
-      <div class="overview-phase" style="flex: 1; background: var(--gmp-future); opacity: 0.7; border-left: 2px dashed #999; color: #666;"><span style="font-size: 7pt;">⬥ Q2</span></div>
-      <div class="overview-phase" style="flex: 4; background: var(--gmp-future); color: #666;"><span>Data Entry + Cleaning</span><span class="phase-sub">May - Aug '26</span></div>
-    </div>
-    <div class="overview-months" style="margin-top: 4px;">
-      <span style="flex: 1; text-align: left;">Nov '25</span>
-      <span style="flex: 3; text-align: center;">Q1 2026</span>
-      <span style="flex: 3; text-align: center;">Q2 2026</span>
-      <span style="flex: 3; text-align: center;">Q3 2026</span>
-      <span style="flex: 3; text-align: center;">Q4 2026</span>
-      <span style="flex: 1; text-align: right;">Dec '26</span>
-    </div>
-    <div style="display: flex; gap: 14px; margin-top: 10px; font-size: 8.5pt; color: var(--gmp-text-light);">
-      <span>🟢 Completed</span> <span>🟠 In progress / delayed</span>
-      <span style="color: #999;">⬜ Planned (not yet started)</span>
-      <span>📍 Current position (2 Apr 2026)</span>
-    </div>
+  <div class="phase-block" style="flex:2;background:var(--gray);color:#666">
+    <span class="label">Keep Core Clean</span>
+    <span class="sub">Apr - May '26</span>
   </div>
-
-  <!-- RETROSPECTIVE -->
-  <div class="section-header"><h2>🔍 Retrospective</h2><span class="badge" style="background: var(--gmp-purple);">NOV 2025 - APR 2026</span></div>
-  <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background: var(--gmp-green);"></div> Completed</div>
-    <div class="legend-item"><div class="legend-dot" style="background: var(--gmp-orange);"></div> In progress / Delayed</div>
-    <div class="legend-item"><div class="legend-dot" style="background: var(--gmp-red);"></div> Not started (was planned)</div>
-    <div class="legend-item"><div class="legend-dot" style="background: var(--gmp-purple);"></div> Planned (future)</div>
+  <div class="phase-block" style="flex:4;background:var(--gray);color:#666">
+    <span class="label">Data Entry + Data Cleaning</span>
+    <span class="sub">May - Aug '26</span>
   </div>
-
-  <div class="timeline-grid">
-
-    <div class="phase-card completed">
-      <div class="phase-header"><div class="phase-title">✅ Phase 1: Preparation</div><div><span class="phase-period">Nov 2025</span></div></div>
-      <div class="status-badge done">COMPLETED - On schedule</div>
-      <div class="phase-content">
-        <div class="deliverables"><h4>Planned</h4><ul><li>Team, stakeholders and governance in place</li><li>Resources allocated</li><li>Data vision/policy first phase finalised</li><li>TRIMM engagement started (16 hrs/week)</li></ul></div>
-        <div class="actuals"><h4>Delivered</h4><ul><li class="done">Project team formed <span class="owner-tag">Mirella</span></li><li class="done">Governance structure established <span class="owner-tag">Martin</span></li><li class="done">Resources allocated</li><li class="done">TRIMM contracted and started <span class="owner-tag">Arnold / Jeroen</span></li><li class="done">Data Vision first phase completed</li></ul></div>
-      </div>
-    </div>
-
-    <div class="phase-card in-progress">
-      <div class="phase-header">
-        <div class="phase-title">🟡 Phase 2: Deep Dive</div>
-        <div style="display: flex; align-items: center; gap: 6px;">
-          <span class="phase-period original">Dec 2025 - Mar 2026</span>
-          <span class="phase-period" style="background: var(--gmp-orange-light); color: #E65100;">Jan 2026 - Mar 2026+</span>
-        </div>
-      </div>
-      <div class="status-badge wip">IN PROGRESS - ~8 weeks delayed</div>
-      <div class="phase-content">
-        <div class="deliverables"><h4>Planned</h4><ul>
-          <li>Define strategic and fundamental pillars</li>
-          <li>Use cases with business and IT impact</li>
-          <li>Process rationalisation / information management</li>
-          <li>Backlog and priorities</li>
-          <li><strong>Data Analysis on BR / Contacts</strong> (added)</li>
-          <li>Go/no-go decision after completion</li>
-        </ul></div>
-        <div class="actuals"><h4>Delivered</h4><ul>
-          <li class="done">Data Vision reviewed and annotated <span class="owner-tag">Team</span></li>
-          <li class="done">TRIMM Data Strategy v0.1 delivered and critically reviewed <span class="owner-tag">Team</span></li>
-          <li class="done">TRIMM Data Strategy v0.2 assessed <span class="owner-tag">Team</span></li>
-          <li class="done">TRIMM Data Strategy v0.3 delivered (significantly improved) <span class="owner-tag">TRIMM</span></li>
-          <li class="done">Data Vision latest draft 10 Mar 2026 <span class="owner-tag">Team</span></li>
-          <li class="done">5 Use cases developed: Account DQ, CB Performance, Churn & Growth, Auditor Scope Validation, Contact Data Management</li>
-          <li class="done">Medallion Architecture analysis (current vs future state) <span class="owner-tag">Rick</span></li>
-          <li class="done">Key processes mapped <span class="owner-tag">Team</span></li>
-          <li class="done">Process prioritisation completed <span class="owner-tag">Mirella, Martin, Stan, Rick, Ellen</span></li>
-          <li class="done">Data Vision approved by MT - final</li>
-          <li class="done">Project roadmap/timeline completed</li>
-          <li class="partial">Data Strategy final approval by MT - 15 April</li>
-          <li class="partial">Data Analysis Business Requests & Contacts</li>
-          <li class="partial">Backlog and prioritisation not yet formalised</li>
-          <li class="partial">SME interviews not yet fully completed</li>
-        </ul></div>
-      </div>
-    </div>
-
-    <div class="phase-card not-started">
-      <div class="phase-header">
-        <div class="phase-title">❌ Phase 3: Keep Core Clean</div>
-        <div style="display: flex; align-items: center; gap: 6px;">
-          <span class="phase-period original">Feb - Mar 2026</span>
-          <span class="phase-period">Apr - May 2026</span>
-        </div>
-      </div>
-      <div class="status-badge blocked">NOT STARTED - Was planned for Feb-Mar 2026</div>
-      <div class="phase-content">
-        <div class="deliverables"><h4>Planned (rescheduled)</h4><ul>
-          <li>Deliver quick wins (see overview below)</li>
-          <li>Data management protocol</li>
-          <li>Retain only essential data per use case</li>
-          <li><strong>Risk analysis:</strong> 1,700+ fields (Kasper Dokter/TRIMM analysis) - clean up or start afresh?</li>
-          <li><strong>Architecture analysis (TRIMM, 4 weeks):</strong><br/>① Finalise architecture blueprint (systems &amp; tools)<br/>② Deep dive into systems &amp; tooling (POC &amp; exploratory conversations with suppliers)<br/>③ Roadmap / implementation plan</li>
-        </ul></div>
-        <div class="actuals"><h4>Reason for delay</h4><ul>
-          <li class="blocked">Deep Dive phase still ongoing; prerequisite not completed</li>
-          <li class="pending">Platform decision (Q2 2026) determines the approach: clean up 1,700+ fields or start afresh?</li>
-          <li class="pending">Uncertainty around which supplier(s) will be involved in implementation</li>
-        </ul></div>
-      </div>
-    </div>
-
-    <div class="phase-card not-started">
-      <div class="phase-header">
-        <div class="phase-title">❌ Phase 4+5: Data Entry + Data Cleaning</div>
-        <div style="display: flex; align-items: center; gap: 6px;">
-          <span class="phase-period original">Mar - Jun 2026</span>
-          <span class="phase-period">May - Aug 2026</span>
-        </div>
-      </div>
-      <div class="status-badge blocked">NOT STARTED - Cascade delay from phases 2 & 3</div>
-      <div class="phase-content">
-        <div class="deliverables"><h4>Planned (rescheduled - merged)</h4><ul>
-          <li>Implement validation rules per use case</li>
-          <li>Smart dropdowns, controlled picklists, standard formats</li>
-          <li>Business-critical data cleaning per backlog priority</li>
-          <li>Data quality monitoring dashboard</li>
-          <li>Phase 1 evaluation and Phase 2 recommendations</li>
-        </ul></div>
-        <div class="actuals"><h4>Impact</h4><ul>
-          <li class="blocked">Dependent on platform decision outcome and risk analysis</li>
-          <li class="pending">Scope changes fundamentally with migration vs optimisation</li>
-          <li class="pending">TRIMM engagement originally through May 2026; extension may be required</li>
-        </ul></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- QUICK WINS -->
-  <div class="qw-card">
-    <h4>🏆 Quick Wins (from use cases - to be delivered in Keep Core Clean)</h4>
-    <div class="qw-grid">
-      <div class="qw-item"><strong>Make Country field mandatory for Accounts</strong><div class="qw-meta">Source: Account DQ | Impact: High | Effort: Low</div></div>
-      <div class="qw-item"><strong>Activate duplicate detection at CB entry</strong><div class="qw-meta">Source: Account DQ | Impact: High | Effort: Medium</div></div>
-      <div class="qw-item"><strong>First data quality dashboard (duplicates, missing fields)</strong><div class="qw-meta">Source: CB Performance | Impact: High | Effort: Medium</div></div>
-      <div class="qw-item"><strong>Remove redundant Account fields (Certification Body, Company Relation)</strong><div class="qw-meta">Source: Account DQ | Impact: Medium | Effort: Low</div></div>
-      <div class="qw-item"><strong>Redefine Account Type dropdown</strong><div class="qw-meta">Source: Account DQ | Impact: Medium | Effort: Low | Phase: Data Entry</div></div>
-      <div class="qw-item"><strong>Legal Business Registration validation (EU plug-in)</strong><div class="qw-meta">Source: Account DQ | Impact: High | Effort: Medium | Phase: Data Entry</div></div>
-    </div>
-  </div>
-
-  <!-- DEPENDENCIES -->
-  <div class="dependency-callout">
-    <div class="icon">🔀</div>
-    <div>
-      <strong style="color: var(--gmp-orange);">Key dependencies:</strong>
-      <div style="margin-top: 6px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-        <div>🏗️ <strong>Platform Decision</strong> (Q2 2026): Platform architecture analysis (TRIMM) is the key dependency for next steps. The 1,700+ field analysis (Kasper Dokter) is one component of this. Risk analysis: clean up or start afresh?</div>
-        <div>🔧 <strong>Supplier selection</strong>: Which external IT supplier(s) will be involved in implementation? Not yet determined; dependent on platform decision.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- FORWARD PLAN -->
-  <div class="section-header"><h2>🚀 Forward Plan</h2><span class="badge" style="background: var(--gmp-green);">APR 2026 - AUG 2026</span></div>
-
-  <!-- GANTT -->
-  <div class="timeline-visual">
-    <div style="font-size: 10pt; font-weight: 600; color: var(--gmp-purple); margin-bottom: 12px;">Visual Timeline - Rescheduled v2</div>
-    <div class="gantt-months">
-      <div class="gantt-label"></div>
-      <div class="gantt-track" style="height: auto;">
-        <div class="gantt-month">Mar</div>
-        <div class="gantt-month current">Apr</div>
-        <div class="gantt-month">May</div>
-        <div class="gantt-month">Jun</div>
-        <div class="gantt-month">Jul</div>
-        <div class="gantt-month">Aug</div>
-        <div class="gantt-month">Sep</div>
-        <div class="gantt-month">Oct</div>
-        <div class="gantt-month">Nov</div>
-        <div class="gantt-month">Dec</div>
-      </div>
-    </div>
-    <div class="gantt-row"><div class="gantt-label">Complete Deep Dive (incl. BR/Contacts)</div><div class="gantt-track"><div class="gantt-bar" style="background: var(--gmp-orange); left: 0%; width: 15%;">Mar - Apr</div></div></div>
-    <div class="gantt-row"><div class="gantt-label">⬥ Go/No-Go #1</div><div class="gantt-track"><div class="gantt-milestone" style="left: 15%;"></div></div></div>
-    <div class="gantt-row"><div class="gantt-label">Keep Core Clean + Quick Wins</div><div class="gantt-track"><div class="gantt-bar" style="background: var(--gmp-purple); left: 10%; width: 15%;">Apr - May</div></div></div>
-    <div class="gantt-row"><div class="gantt-label">Platform architecture analysis (TRIMM, 4 wk)</div><div class="gantt-track"><div class="gantt-bar" style="background: var(--gmp-future); color: #666; left: 10%; width: 25%;">Apr - Jun</div></div></div>
-    <div class="gantt-row"><div class="gantt-label">⬥ Platform Decision</div><div class="gantt-track"><div class="gantt-bar" style="background: var(--gmp-future); color: #666; left: 10%; width: 23%; border: 2px dashed #999;">Q2 (flexible)</div><div class="gantt-milestone" style="left: 30%;"></div></div></div>
-    <div class="gantt-divider"><div class="gantt-label">After Go/No-Go #1:</div><div class="gantt-track" style="height: 1px; border-top: 1px dashed var(--gmp-border);"></div></div>
-    <div class="gantt-row"><div class="gantt-label">Data Entry + Data Cleaning</div><div class="gantt-track"><div class="gantt-bar" style="background: var(--gmp-purple-mid); left: 20%; width: 40%;">May - Aug</div></div></div>
-    <div class="gantt-row"><div class="gantt-label">⬥ Go/No-Go #2</div><div class="gantt-track"><div class="gantt-milestone" style="left: 35%;"></div></div></div>
-    <div class="gantt-row"><div class="gantt-label">⬥ Phase 1 Evaluation</div><div class="gantt-track"><div class="gantt-milestone" style="left: 55%;"></div></div></div>
-    <div class="gantt-divider"><div class="gantt-label">External partners:</div><div class="gantt-track" style="height: 1px; border-top: 1px dashed var(--gmp-border);"></div></div>
-    <div class="gantt-row"><div class="gantt-label" style="color: var(--gmp-text-light);">TRIMM engagement</div><div class="gantt-track"><div class="gantt-bar" style="background: #CFD8DC; color: var(--gmp-text); left: 0%; width: 25%; border: 1px dashed #90A4AE;">through May (orig.)</div><div class="gantt-bar" style="background: #ECEFF1; color: #90A4AE; left: 25%; width: 20%; border: 1px dashed #B0BEC5;">Extension?</div></div></div>
-    <div class="gantt-divider"><div class="gantt-label">Conditional:</div><div class="gantt-track" style="height: 1px; border-top: 1px dashed var(--gmp-border);"></div></div>
-    <div class="gantt-row"><div class="gantt-label" style="color: var(--gmp-orange); font-style: italic;">IF migration: new platform</div><div class="gantt-track"><div class="gantt-bar" style="background: repeating-linear-gradient(45deg, var(--gmp-orange), var(--gmp-orange) 4px, #F4A742 4px, #F4A742 8px); left: 30%; width: 45%; opacity: 0.7;">POC + Migration (Q3 - Q4)</div></div></div>
-  </div>
-
-  <!-- FORWARD PLAN PHASES -->
-  <div class="timeline-grid">
-    <div class="milestone-row"><div class="milestone-icon">🏗️</div><div class="milestone-content"><strong>Platform Decision - Splitpoint</strong><p>Platform architecture analysis (TRIMM) determines the direction. The 1,700+ field analysis (Kasper Dokter) is one component. Clean up or start afresh? Incl. architecture blueprint, systems deep dive and roadmap.</p></div><div class="milestone-date">Q2 2026</div></div>
-
-    <div class="phase-card future">
-      <div class="phase-header"><div class="phase-title">🎯 Deep Dive - Completion</div><span class="phase-period">Mar - Mid-Apr 2026</span></div>
-      <div class="status-badge planned">RESCHEDULED - 3-4 weeks remaining</div>
-      <div class="phase-content">
-        <div class="deliverables"><h4>Remaining deliverables</h4><ul>
-          <li>Formalise and prioritise backlog <span class="owner-tag">Mirella + Rick</span></li>
-          <li><strong>Data Analysis on BR / Contacts</strong> <span class="owner-tag">Team</span></li>
-          <li>Complete remaining SME interviews <span class="owner-tag">Team</span></li>
-          <li>Data Strategy final approval by MT - 15 April <span class="owner-tag">Mirella</span></li>
-          <li>Discuss "Market Development" pillar <span class="owner-tag">Project team</span></li>
-        </ul></div>
-        <div class="deliverables"><h4>Go/No-Go #1 criteria</h4><ul>
-          <li>✅ Data Vision approved by MT</li>
-          <li>✅ Project roadmap/timeline completed</li>
-          <li>Data Strategy v0.3+ accepted as working document</li>
-          <li>Backlog prioritised with business impact scoring</li>
-          <li>Platform decision in preparation (Q2)</li>
-          <li>Project governance continued (Martin + Mirella)</li>
-        </ul></div>
-      </div>
-    </div>
-
-    <div class="phase-card future">
-      <div class="phase-header"><div class="phase-title">🧹 Keep Core Clean + Quick Wins</div><span class="phase-period">Apr - May 2026</span></div>
-      <div class="status-badge planned">RESCHEDULED - Starts after Go/No-Go #1</div>
-      <div class="phase-content">
-        <div class="deliverables"><h4>Quick Wins + Foundation</h4><ul>
-          <li>Quick Win: Country field mandatory <span class="owner-tag">Rick</span></li>
-          <li>Quick Win: Duplicate detection at CB entry <span class="owner-tag">Rick</span></li>
-          <li>Quick Win: First DQ dashboard <span class="owner-tag">Rick + TRIMM</span></li>
-          <li>Quick Win: Remove redundant Account fields <span class="owner-tag">Team</span></li>
-          <li>Data management protocol <span class="owner-tag">Mirella + TRIMM</span></li>
-          <li>Identify essential vs redundant data <span class="owner-tag">Team</span></li>
-        </ul></div>
-        <div class="deliverables"><h4>Risk Analysis & Platform Research</h4><ul>
-          <li>Risk analysis: 1,700+ fields - clean up or start afresh? <span class="owner-tag">Rick + Martin</span></li>
-          <li>Architecture analysis: blueprint, systems deep dive (POC + suppliers), roadmap (4 weeks) <span class="owner-tag">TRIMM + Rick + Martin</span></li>
-          <li>Track B: POC with selected platform <span class="owner-tag">Team + ext. Vendor</span></li>
-          <li>Track B: Data mapping + CB communication plan <span class="owner-tag">Rick + Mirella</span></li>
-        </ul></div>
-      </div>
-    </div>
-
-    <div class="phase-card future">
-      <div class="phase-header"><div class="phase-title">📝🧼 Data Entry + Data Cleaning</div><span class="phase-period">May - Aug 2026</span></div>
-      <div class="status-badge planned">RESCHEDULED - Merged</div>
-      <div class="phase-content">
-        <div class="deliverables"><h4>Deliverables</h4><ul>
-          <li>Implement validation rules per use case <span class="owner-tag">Supplier</span></li>
-          <li>Smart dropdowns and controlled picklists <span class="owner-tag">Rick + Ellen</span></li>
-          <li>Quick Win: Redefine Account Type dropdown <span class="owner-tag">Rick + Ellen</span></li>
-          <li>Quick Win: Legal Business Registration validation (EU plug-in) <span class="owner-tag">Supplier</span></li>
-          <li>Business-critical data cleaning per priority <span class="owner-tag">Team + SMEs</span></li>
-          <li>Automated cleaning (AI/scripts) <span class="owner-tag">Rick</span></li>
-          <li>CB Performance Dashboard live (Power BI) <span class="owner-tag">Rick + TRIMM</span></li>
-          <li>Data quality monitoring dashboard <span class="owner-tag">Rick</span></li>
-          <li>Phase 1 evaluation and Phase 2 recommendations <span class="owner-tag">Mirella + Team</span></li>
-        </ul></div>
-        <div class="deliverables"><h4>Go/No-Go #2 + Final Evaluation</h4><ul>
-          <li>Validation rules live for top 3 use cases</li>
-          <li>Measurable reduction in data entry errors</li>
-          <li>Data management protocol implemented</li>
-          <li>Platform risk analysis completed</li>
-          <li>Data accuracy measurement (baseline vs current)</li>
-          <li>Recommendation for Phase 2 scope and budget</li>
-        </ul></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TEAM -->
-  <div class="phase-card" style="border-left-color: var(--gmp-green);">
-    <div class="phase-title" style="margin-bottom: 10px;">👥 Project Team & Stakeholders</div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; font-size: 9.5pt;">
-      <div><strong style="color: var(--gmp-purple);">Project Team</strong><div style="margin-top: 4px;"><div>📌 <strong>Mirella van der Kleij</strong> - Project Manager</div><div>🎯 <strong>Martin van den Bedum</strong> - Sponsor / Project Governance</div><div>💻 <strong>Rick van Dijk</strong> - Project Member</div><div>👤 <strong>Stan Hendriks</strong> - Project Member</div><div>👤 <strong>Ellen van Dorssen</strong> - Project Member</div></div></div>
-      <div><strong style="color: var(--gmp-purple);">SMEs</strong><div style="margin-top: 4px;"><div>📋 <strong>Ellen van Dorssen</strong> - D365 CE / Resco / Audit</div><div>📊 <strong>Dalia Brkulic</strong> - Monitoring database</div><div>📞 <strong>Wenxin Guo</strong> - Helpdesk</div><div>🌍 <strong>Olyn San Miguel</strong> - Business Development</div><div>📝 <strong>Astrid Straub</strong> - Administrative</div></div></div>
-      <div><strong style="color: var(--gmp-purple);">External Partners</strong><div style="margin-top: 4px;"><div>🏢 <strong>TRIMM</strong> - Arnold Maskat, Jeroen Wijnholds</div><div style="font-size: 8.5pt; color: var(--gmp-text-light); margin-top: 2px; padding-left: 24px;">BI / Data Strategy, 16 hrs/week</div></div><div style="margin-top: 8px; font-size: 8.5pt; color: var(--gmp-text-light); font-style: italic;">Other IT suppliers: after platform decision.</div></div>
-    </div>
-  </div>
-
-  <!-- RISKS -->
-  <div class="phase-card" style="border-left-color: var(--gmp-orange); margin-top: 12px;">
-    <div class="phase-title" style="margin-bottom: 10px;">⚠️ Risks & Points of Attention</div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 9.5pt;">
-      <div><strong style="color: var(--gmp-red);">High risk</strong><ul style="list-style: none; padding: 0; margin-top: 4px;">
-        <li style="padding: 3px 0;">🔴 Platform decision delay creates a cascade effect on all phases. Platform architecture analysis (TRIMM) is the key dependency; field analysis by Kasper is one component.</li>
-        <li style="padding: 3px 0;">🔴 Supplier selection/availability may delay implementation</li>
-      </ul></div>
-      <div><strong style="color: var(--gmp-orange);">Medium risk</strong><ul style="list-style: none; padding: 0; margin-top: 4px;">
-        <li style="padding: 3px 0;">🟠 TRIMM engagement ends ~May 2026; extension not yet discussed</li>
-        <li style="padding: 3px 0;">🟠 Budget monitoring required; €325K including €30K tolerance</li>
-        <li style="padding: 3px 0;">🟠 SME availability alongside day-to-day responsibilities</li>
-      </ul></div>
-    </div>
-  </div>
-
-  <div class="footer"><strong>GMP+ International</strong> | Data Quality Project Phase 1 | Updated Roadmap as of 2 April 2026<br>Working document for the project team - Not for MT/external distribution without adjustment</div>
 </div>
+<div class="month-labels">
+  <span style="flex:1;text-align:left">Nov '25</span>
+  <span style="flex:2;text-align:center">Q1 2026</span>
+  <span style="flex:2;text-align:center">Q2 2026</span>
+  <span style="flex:2;text-align:center">Q3 2026</span>
+  <span style="flex:1;text-align:right">Aug '26</span>
+</div>
+
+<!-- KEY MILESTONES -->
+<div class="milestones">
+  <div class="ms">
+    <div class="ms-icon">🎯</div>
+    <div class="ms-title">Go/No-Go #1</div>
+    <div class="ms-when">April 2026</div>
+    <div class="ms-desc">Data Vision approved. Data Strategy accepted. Backlog prioritised.</div>
+  </div>
+  <div class="ms">
+    <div class="ms-icon">🏗️</div>
+    <div class="ms-title">Platform Architecture</div>
+    <div class="ms-when">Q2 2026 (flexible)</div>
+    <div class="ms-desc">Architecture analysis by TRIMM. Clean up existing or start afresh?</div>
+  </div>
+  <div class="ms">
+    <div class="ms-icon">✅</div>
+    <div class="ms-title">Phase 1 Evaluation</div>
+    <div class="ms-when">August 2026</div>
+    <div class="ms-desc">Results measured. Phase 2 recommendation and budget.</div>
+  </div>
+</div>
+
+<!-- PHASE CARDS -->
+<div class="phases">
+  <div class="pc done">
+    <div class="pc-status">✅ Completed</div>
+    <h3>Preparation</h3>
+    <div class="pc-period">November 2025</div>
+    <div class="pc-items">
+      <span>Team and governance</span>
+      <span>Resources allocated</span>
+      <span>Data Vision first phase</span>
+      <span>TRIMM engagement started</span>
+    </div>
+  </div>
+  <div class="pc wip">
+    <div class="pc-status">🟠 In progress (~8 wks delayed)</div>
+    <h3>Deep Dive</h3>
+    <div class="pc-period">January - April 2026</div>
+    <div class="pc-items">
+      <span>✅ Data Vision approved by MT</span>
+      <span>✅ Data Strategy v0.3 delivered</span>
+      <span>✅ 5 use cases developed</span>
+      <span>🟡 Data Analysis BR/Contacts</span>
+      <span>🟡 Backlog prioritisation</span>
+    </div>
+  </div>
+  <div class="pc future">
+    <div class="pc-status">⬜ Planned</div>
+    <h3>Keep Core Clean</h3>
+    <div class="pc-period">April - May 2026</div>
+    <div class="pc-items">
+      <span>Quick wins delivery</span>
+      <span>Architecture analysis (TRIMM)</span>
+      <span>Data management protocol</span>
+      <span>Essential vs redundant data</span>
+    </div>
+  </div>
+  <div class="pc future">
+    <div class="pc-status">⬜ Planned</div>
+    <h3>Data Entry + Cleaning</h3>
+    <div class="pc-period">May - August 2026</div>
+    <div class="pc-items">
+      <span>Validation rules per use case</span>
+      <span>Smart dropdowns and picklists</span>
+      <span>Business-critical data cleaning</span>
+      <span>Quality monitoring dashboard</span>
+    </div>
+  </div>
+</div>
+
+<!-- KEY DEPENDENCIES -->
+<div class="deps">
+  <div class="dep-icon">🔀</div>
+  <div class="dep-item"><strong>Platform architecture</strong> - TRIMM analysis (4 weeks) is the key dependency for next steps. Blueprint, systems deep dive, roadmap.</div>
+  <div class="dep-item"><strong>Supplier selection</strong> - Which IT supplier(s) for implementation? Determined after platform decision.</div>
+</div>
+
+<!-- FORWARD PLAN -->
+<div class="section-header"><h2>🚀 Forward Plan</h2><span class="badge" style="background: var(--green);">APR 2026 - AUG 2026</span></div>
+
+<!-- GANTT -->
+<div class="timeline-visual">
+  <div style="font-size: 10pt; font-weight: 600; color: var(--purple); margin-bottom: 12px;">Visual Timeline - Rescheduled v2</div>
+  <div class="gantt-months">
+    <div class="gantt-label"></div>
+    <div class="gantt-track" style="height: auto;">
+      <div class="gantt-month">Mar</div>
+      <div class="gantt-month current">Apr</div>
+      <div class="gantt-month">May</div>
+      <div class="gantt-month">Jun</div>
+      <div class="gantt-month">Jul</div>
+      <div class="gantt-month">Aug</div>
+      <div class="gantt-month">Sep</div>
+      <div class="gantt-month">Oct</div>
+      <div class="gantt-month">Nov</div>
+      <div class="gantt-month">Dec</div>
+    </div>
+  </div>
+  <div class="gantt-row"><div class="gantt-label">Complete Deep Dive (incl. BR/Contacts)</div><div class="gantt-track"><div class="gantt-bar" style="background: var(--orange); left: 0%; width: 15%;">Mar - Apr</div></div></div>
+  <div class="gantt-row"><div class="gantt-label">⬥ Go/No-Go #1</div><div class="gantt-track"><div class="gantt-milestone" style="left: 15%;"></div></div></div>
+  <div class="gantt-row"><div class="gantt-label">Keep Core Clean + Quick Wins</div><div class="gantt-track"><div class="gantt-bar" style="background: var(--purple); left: 10%; width: 15%;">Apr - May</div></div></div>
+  <div class="gantt-row"><div class="gantt-label">Platform architecture analysis (TRIMM, 4 wk)</div><div class="gantt-track"><div class="gantt-bar" style="background: var(--future); color: #666; left: 10%; width: 25%;">Apr - Jun</div></div></div>
+  <div class="gantt-row"><div class="gantt-label">⬥ Platform Decision</div><div class="gantt-track"><div class="gantt-bar" style="background: var(--future); color: #666; left: 10%; width: 23%; border: 2px dashed #999;">Q2 (flexible)</div><div class="gantt-milestone" style="left: 30%;"></div></div></div>
+  <div class="gantt-divider"><div class="gantt-label">After Go/No-Go #1:</div><div class="gantt-track" style="height: 1px; border-top: 1px dashed var(--border);"></div></div>
+  <div class="gantt-row"><div class="gantt-label">Data Entry + Data Cleaning</div><div class="gantt-track"><div class="gantt-bar" style="background: var(--purple-mid); left: 20%; width: 40%;">May - Aug</div></div></div>
+  <div class="gantt-row"><div class="gantt-label">⬥ Go/No-Go #2</div><div class="gantt-track"><div class="gantt-milestone" style="left: 35%;"></div></div></div>
+  <div class="gantt-row"><div class="gantt-label">⬥ Phase 1 Evaluation</div><div class="gantt-track"><div class="gantt-milestone" style="left: 55%;"></div></div></div>
+  <div class="gantt-divider"><div class="gantt-label">External partners:</div><div class="gantt-track" style="height: 1px; border-top: 1px dashed var(--border);"></div></div>
+  <div class="gantt-row"><div class="gantt-label" style="color: var(--light);">TRIMM engagement</div><div class="gantt-track"><div class="gantt-bar" style="background: #CFD8DC; color: var(--text); left: 0%; width: 25%; border: 1px dashed #90A4AE;">through May (orig.)</div><div class="gantt-bar" style="background: #ECEFF1; color: #90A4AE; left: 25%; width: 20%; border: 1px dashed #B0BEC5;">Extension?</div></div></div>
+  <div class="gantt-divider"><div class="gantt-label">Conditional:</div><div class="gantt-track" style="height: 1px; border-top: 1px dashed var(--border);"></div></div>
+  <div class="gantt-row"><div class="gantt-label" style="color: var(--orange); font-style: italic;">IF migration: new platform</div><div class="gantt-track"><div class="gantt-bar" style="background: repeating-linear-gradient(45deg, var(--orange), var(--orange) 4px, #F4A742 4px, #F4A742 8px); left: 30%; width: 45%; opacity: 0.7;">POC + Migration (Q3 - Q4)</div></div></div>
+</div>
+
+<!-- FORWARD PLAN PHASES -->
+<div class="timeline-grid">
+  <div class="milestone-row"><div class="milestone-icon">🏗️</div><div class="milestone-content"><strong>Platform Decision - Splitpoint</strong><p>Platform architecture analysis (TRIMM) determines the direction. The 1,700+ field analysis (Kasper Dokter) is one component. Clean up or start afresh? Incl. architecture blueprint, systems deep dive and roadmap.</p></div><div class="milestone-date">Q2 2026</div></div>
+
+  <div class="phase-card future">
+    <div class="phase-header"><div class="phase-title">🎯 Deep Dive - Completion</div><span class="phase-period">Mar - Mid-Apr 2026</span></div>
+    <div class="status-badge planned">RESCHEDULED - 3-4 weeks remaining</div>
+    <div class="phase-content">
+      <div class="deliverables"><h4>Remaining deliverables</h4><ul>
+        <li>Formalise and prioritise backlog <span class="owner-tag">Mirella + Rick</span></li>
+        <li><strong>Data Analysis on BR / Contacts</strong> <span class="owner-tag">Team</span></li>
+        <li>Complete remaining SME interviews <span class="owner-tag">Team</span></li>
+        <li>Data Strategy final approval by MT - 15 April <span class="owner-tag">Mirella</span></li>
+        <li>Discuss "Market Development" pillar <span class="owner-tag">Project team</span></li>
+      </ul></div>
+      <div class="deliverables"><h4>Go/No-Go #1 criteria</h4><ul>
+        <li>✅ Data Vision approved by MT</li>
+        <li>✅ Project roadmap/timeline completed</li>
+        <li>Data Strategy v0.3+ accepted as working document</li>
+        <li>Backlog prioritised with business impact scoring</li>
+        <li>Platform decision in preparation (Q2)</li>
+        <li>Project governance continued (Martin + Mirella)</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="phase-card future">
+    <div class="phase-header"><div class="phase-title">🧹 Keep Core Clean + Quick Wins</div><span class="phase-period">Apr - May 2026</span></div>
+    <div class="status-badge planned">RESCHEDULED - Starts after Go/No-Go #1</div>
+    <div class="phase-content">
+      <div class="deliverables"><h4>Quick Wins + Foundation</h4><ul>
+        <li>Quick Win: Country field mandatory <span class="owner-tag">Rick</span></li>
+        <li>Quick Win: Duplicate detection at CB entry <span class="owner-tag">Rick</span></li>
+        <li>Quick Win: First DQ dashboard <span class="owner-tag">Rick + TRIMM</span></li>
+        <li>Quick Win: Remove redundant Account fields <span class="owner-tag">Team</span></li>
+        <li>Data management protocol <span class="owner-tag">Mirella + TRIMM</span></li>
+        <li>Identify essential vs redundant data <span class="owner-tag">Team</span></li>
+      </ul></div>
+      <div class="deliverables"><h4>Risk Analysis & Platform Research</h4><ul>
+        <li>Risk analysis: 1,700+ fields - clean up or start afresh? <span class="owner-tag">Rick + Martin</span></li>
+        <li>Architecture analysis: blueprint, systems deep dive (POC + suppliers), roadmap (4 weeks) <span class="owner-tag">TRIMM + Rick + Martin</span></li>
+        <li>Track B: POC with selected platform <span class="owner-tag">Team + ext. Vendor</span></li>
+        <li>Track B: Data mapping + CB communication plan <span class="owner-tag">Rick + Mirella</span></li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="phase-card future">
+    <div class="phase-header"><div class="phase-title">📝🧼 Data Entry + Data Cleaning</div><span class="phase-period">May - Aug 2026</span></div>
+    <div class="status-badge planned">RESCHEDULED - Merged</div>
+    <div class="phase-content">
+      <div class="deliverables"><h4>Deliverables</h4><ul>
+        <li>Implement validation rules per use case <span class="owner-tag">Supplier</span></li>
+        <li>Smart dropdowns and controlled picklists <span class="owner-tag">Rick + Ellen</span></li>
+        <li>Quick Win: Redefine Account Type dropdown <span class="owner-tag">Rick + Ellen</span></li>
+        <li>Quick Win: Legal Business Registration validation (EU plug-in) <span class="owner-tag">Supplier</span></li>
+        <li>Business-critical data cleaning per priority <span class="owner-tag">Team + SMEs</span></li>
+        <li>Automated cleaning (AI/scripts) <span class="owner-tag">Rick</span></li>
+        <li>CB Performance Dashboard live (Power BI) <span class="owner-tag">Rick + TRIMM</span></li>
+        <li>Data quality monitoring dashboard <span class="owner-tag">Rick</span></li>
+        <li>Phase 1 evaluation and Phase 2 recommendations <span class="owner-tag">Mirella + Team</span></li>
+      </ul></div>
+      <div class="deliverables"><h4>Go/No-Go #2 + Final Evaluation</h4><ul>
+        <li>Validation rules live for top 3 use cases</li>
+        <li>Measurable reduction in data entry errors</li>
+        <li>Data management protocol implemented</li>
+        <li>Platform risk analysis completed</li>
+        <li>Data accuracy measurement (baseline vs current)</li>
+        <li>Recommendation for Phase 2 scope and budget</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="foot">Working document for the project team. Full detailed roadmap available separately. | GMP+ International 2026</div>
+
 </body>
 </html>
